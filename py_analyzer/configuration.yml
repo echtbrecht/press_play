@@ -1,0 +1,5 @@
+influxdb:
+  url: DESKTOP-APG3MQI
+  port: 8086
+  token: _aAH0kUFglxxdx7fCXI4qCfIUhJegIg60TCvxljhVr9Pz3KqogCBGdHFGcJsatiGOfI97S3Ef1dTLO8KfpdUXw==
+  organization: Press-Play
