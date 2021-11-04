@@ -1,6 +1,7 @@
 import pandas as pd
 from influxdb_client import InfluxDBClient
 import yaml
+import logging
 
 
 def long_to_wide(long_dataframe):
@@ -33,6 +34,7 @@ def custom_query_dataframe(query_api, qs, org):
 
 
 if __name__ == "__main__":
+    logging.basicConfig(format='%(asctime)s %(message)s',level=logging.DEBUG)
     # Read the configuration file
     config = {}
     with open('configuration.yml') as f:
@@ -40,18 +42,19 @@ if __name__ == "__main__":
 
     # Set up the influx db client
     endpoint = f"http://{config['influxdb']['url']}:{config['influxdb']['port']}"
+    logging.debug(f"Connecting to following influxdb {endpoint}")
     client = InfluxDBClient(url=endpoint, token=config['influxdb']['token'])
     query_api = client.query_api()
 
     # Make a query. This one is taken from the InfluxDB webinterface
     query = """from(bucket: "Telegraf")
-  |> range(start: -1h)
-  |> filter(fn: (r) => r["_measurement"] == "OPCUA/SimulationServer")
-  |> filter(fn: (r) => r["_field"] == "Counter")
+  |> range(start: -6h)
+  |> filter(fn: (r) => r["_measurement"] == "votes")
   """
     # Get data
     result = custom_query_dataframe(query_api, query, org=config['influxdb']['organization'])
     result = long_to_wide(result)
+    logging.info(f"Received a dataframe containing {len(result)} records")
 
     # The end
-    print("Congrats! We have data!")
+    logging.info("Congrats! We have data!")
