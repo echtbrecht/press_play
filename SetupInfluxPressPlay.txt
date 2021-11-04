@@ -142,3 +142,6 @@ Configur Telegraf in API
 
 Create Telegraf container
 	docker run -d -it --restart unless-stopped -p 1883:1883 --name=telegraf_mqtt telegraf
+	
+Use Telegraf Setup Instructions
+	replace localhost to influx docker ip-adress
