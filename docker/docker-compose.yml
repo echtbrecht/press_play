@@ -21,8 +21,13 @@ services:
         - DOCKER_INFLUXDB_INIT_USERNAME=admin
         - DOCKER_INFLUXDB_INIT_PASSWORD=password
         - DOCKER_INFLUXDB_INIT_ORG=press_play
-        - DOCKER_INFLUXDB_INIT_BUCKET=initial_bucket
+        - DOCKER_INFLUXDB_INIT_BUCKET=telegraf_data
         - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=oursecrettoken
+  telegraf:
+      build: telegraf_instance
+      restart: always
+      networks:
+        - backend
 volumes:
   influxdb_volume:
 
