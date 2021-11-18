@@ -1,0 +1,6 @@
+version: "3.9"
+services:
+  mqtt:
+    build: mqtt_broker
+    ports:
+      - "1883:1883"
