@@ -1,16 +1,25 @@
-from paho.mqtt import client as mqtt_client
 import random
-import time
+import threading
+from paho.mqtt import client as mqtt_client
 
-broker = '192.168.178.137'
+broker = 'localhost'
 port = 1883
 topic = "mqtt_spammer"
-# generate client ID with pub prefix randomly
-client_id = f'python-mqtt-{random.randint(0, 1000)}'
-# username = 'emqx'
-# password = 'public'
 
-def connect_mqtt():
+
+class spammer(threading.Thread):
+    client_id = ''
+
+    def __init__(self):
+        threading.Thread.__init__(self)
+        self.client_id = f'python-mqtt-{random.randint(0, 100000000)}'
+        self.client = connect_mqtt(self.client_id)
+
+    def run(self):
+        publish(self.client, self.client_id)
+
+
+def connect_mqtt(client_id):
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
             print("Connected to MQTT Broker!")
@@ -24,25 +33,25 @@ def connect_mqtt():
     return client
 
 
-def publish(client):
+def publish(client, client_id):
     msg_count = 0
-    while msg_count < 150**6:
-        time.sleep(1/150)
-        msg = f"votes,ID=779 vote={msg_count}"
-        result = client.publish(topic, msg)
+    while msg_count < 1000:
+        msg = f"votes,ID={client_id} vote={msg_count}"
+        result = client.publish(topic, msg, qos=1)
         # result: [0, 1]
         status = result[0]
-        if status == 0:
-            print(f"Send `{msg}` to topic `{topic}`")
-        else:
+        if status != 0:
             print(f"Failed to send message to topic {topic}")
         msg_count += 1
 
 
 def run():
-    client = connect_mqtt()
-    client.loop_start()
-    publish(client)
+    number_of_threads = 1000
+    i = 0
+    while i < number_of_threads:
+        thread = spammer()
+        thread.start()
+        i += 1
 
 
 if __name__ == '__main__':
