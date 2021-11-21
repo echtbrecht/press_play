@@ -7,6 +7,21 @@ port = 1883
 topic = "mqtt_spammer"
 
 
+"""
+Flux query to get the number of records inside of the database.
+
+from(bucket: "telegraf_data")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r["_measurement"] == "votes")
+ |> group()
+  |> sort(columns: ["_time"])
+
+  |> keep(columns: ["_value"])
+  |> count()
+
+"""
+
+
 class spammer(threading.Thread):
     client_id = ''
 
