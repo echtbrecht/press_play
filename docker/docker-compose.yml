@@ -17,6 +17,8 @@ services:
       restart: always
       volumes:
           - influxdb_volume:/var/lib/influxdb
+          - influxdb_volume2:/var/lib/influxdb2
+          - influxdb_volume3:/etc/influxdb2
       networks:
         - backend
       environment:
@@ -33,6 +35,8 @@ services:
         - backend
 volumes:
   influxdb_volume:
+  influxdb_volume2:
+  influxdb_volume3:
   mosquitto_data:
   mosquitto_log:
 
