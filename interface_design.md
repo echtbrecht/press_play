@@ -24,7 +24,7 @@ The controller can publish on this topic
 
 Example for a button message
 ```
-controllers,id=D8F3A5A646FB,type=button button_name=1
+controllers,id=D8F3A5A646FB button_name=1
 ```
 Example for a diagnostic message
 ```
