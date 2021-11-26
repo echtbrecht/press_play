@@ -33,6 +33,11 @@ services:
       restart: always
       networks:
         - backend
+  dhcp:
+      build: dhcp_server
+      restart: unless-stopped
+      network_mode: host
+
 volumes:
   influxdb_volume:
   influxdb_volume2:
@@ -44,5 +49,4 @@ volumes:
 networks:
   backend:
     driver: bridge
-
 
