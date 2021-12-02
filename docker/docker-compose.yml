@@ -33,10 +33,24 @@ services:
       restart: always
       networks:
         - backend
-  dhcp:
-      build: dhcp_server
-      restart: unless-stopped
-      network_mode: host
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+    environment:
+      TZ: 'Europe/Brussels'
+      WEBPASSWORD: 'kobetakesover'
+    # Volumes store your data between container upgrades
+    volumes:
+      - pihole_settings:/etc/pihole/'
+      - pihole_dns:/etc/dnsmasq.d/'
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
 
 volumes:
   influxdb_volume:
@@ -44,6 +58,8 @@ volumes:
   influxdb_volume3:
   mosquitto_data:
   mosquitto_log:
+  pihole_dns:
+  pihole_settings:
 
 
 networks:

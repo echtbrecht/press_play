@@ -1,0 +1,3 @@
+cd /home/pi/Desktop/pressplay/docker
+docker-compose up -d
+pause
