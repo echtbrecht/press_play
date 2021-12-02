@@ -13,7 +13,7 @@ The controller needs to send data to our database & needs to receive commands fr
 |---------------------------------|-----------------|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | controllers/#macaddress#/input  | #line_protocol# | publish           | All things that need to be stored to the database: button presses, diagnostics, ...                                                                                                  |
 | controllers/#macaddress#/output | #json object#   | subscribe         | All things that a *specific* controller needs to do: light up buttons, print text, ...                                                                                               |
-| controllers/im_alive            | #line_protocol# | publish/last will | All things regarding onboarding and offboarding: on first connect an "I'm alive" message can be send, on connection lost, the broker can send a specific "I'm dead" message for the |
+| controllers/#macaddress#/im_alive            | #line_protocol# | publish/last will | All things regarding onboarding and offboarding: on first connect an "I'm alive" message can be send, on connection lost, the broker can send a specific "I'm dead" message for the |
 | controllers/output              | #json object#   | subscribe         | All things that *all* controllers need to do: * Send a diagnostics string (battery level, uptime, connected bssid) *                                                                     |
 
 
