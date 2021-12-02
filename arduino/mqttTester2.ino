@@ -22,7 +22,7 @@ void setup()
   Serial.print("Connected, IP address: ");
   Serial.println(WiFi.localIP());
   
-  if (!mqttClient.connect("192.168.0.101", 1883)) {
+  if (!mqttClient.connect("192.168.178.172", 1883)) {
     Serial.print("MQTT connection failed! Error code = ");
     Serial.println(mqttClient.connectError());
 
