@@ -15,7 +15,9 @@ class Controller:
         self.identifier = identifier
         self.mqtt_client = mqtt_client.Client(identifier)
         self.mqtt_client.username_pw_set('username', 'password')
+        self.mqtt_client.will_set(f"controllers/{self.identifier}/im_alive", f"controllers,id={self.identifier} im_alive=False")
         self.mqtt_client.connect(broker_address, 1883)
+        self.mqtt_client.publish(f"controllers/{self.identifier}/im_alive", f"controllers,id={self.identifier} im_alive=True")
 
     def send_a_button_press(self, button_name=1):
         # Build a topic so that Telegraf will pick this up
@@ -42,7 +44,7 @@ def run():
     first_controller = Controller()
     first_controller.send_a_button_press()
 
-    number_of_threads = 2
+    number_of_threads = 1000
     i = 0
     while i < number_of_threads:
         thread = Thread()
